@@ -36,11 +36,22 @@
 #
 class logstash_reporter (
   $logstash_host  = '127.0.0.1',
-  $logstash_port  = 5999,
-  $config_file  = '/etc/puppet/logstash.yaml',
-  $config_owner = 'puppet',
-  $config_group = 'puppet',
+  $logstash_port  = 5959,
+  $config_file  = '/etc/puppetlabs/puppet/logstash.yaml',
+  $puppet_config_file = '/etc/puppetlabs/puppet/puppet.conf',
+  $config_owner = 'pe-puppet',
+  $config_group = 'pe-puppet',
 ){
+  
+  augeas {'puppet_conf_master_logstash':
+    context => "/files${puppet_config_file}/master",
+    changes => ["set reports console,puppetdb,logstash","set report true", "set pluginsync true"],
+  }
+  
+  augeas {'puppet_conf_agent_logstash':
+    context => "/files${puppet_config_file}/agent",
+    changes => ["set report true", "set pluginsync true"],
+  }
 
   file { $config_file:
     ensure  => file,
