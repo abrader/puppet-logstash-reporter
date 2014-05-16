@@ -38,7 +38,7 @@ java -jar build/logstash-<version>-flatjar.jar agent -f logstash.conf
 
 Installation and Usage
 ----------------------
-
+<del>
 1. Define a TCP input as described above in your Logstash configuration file
 2. Copy the `logstash.yaml` to `/etc/puppet`
 3. Enable pluginsync and reports on your puppetmaster and clients in `puppet.conf`
@@ -52,6 +52,9 @@ pluginsync = true
 report = true
 pluginsync = true
 ```
+</del>
+
+Strikethrough section is now hanled by this module.
 
 4. Run the Puppet client and sync the report as a plugin
 
